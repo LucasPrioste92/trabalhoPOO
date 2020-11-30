@@ -1,0 +1,10 @@
+cria Duna 3
+cria Montanha 4
+cria asd assd
+cria Duna 4
+cria Dunas 1
+cria Duna -1
+cria asd
+cria Duna asd
+cria Duna asd
+cria Duna asd

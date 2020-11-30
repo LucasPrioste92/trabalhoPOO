@@ -95,7 +95,6 @@ Territorio::Territorio(string nomeTipo){
         pontosVitoria = 2;
         conquistado = 0;
     }else {
-        cout << "Nao foi possivel criar, pois o nome " << nomeTipo << " nao e possivel!!!\n";
         return;
     }
     

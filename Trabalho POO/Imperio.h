@@ -18,8 +18,15 @@ public:
 	string getNomeImperio() const { return nome;}
 	string getNomeImperador() const { return nomeImperador;}
 	string getAsString() const;
+	bool verificaNomesTerritoriosCriados(const string nomeTerritorio) const;
+	void listar(string nomeTerritorio, const Imperio &i);
+	void carregaConfig(string nomeFicheiro,Imperio& i);
 };
 ostream &operator<<(ostream &os, const Imperio &i);
 void boasVindas();
+void comandos();
 bool verificaNomesTerritorios(string nomeVerificar);
+
+
+
 #endif
