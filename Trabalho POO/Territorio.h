@@ -24,6 +24,7 @@ public:
 	int getCriacaoOuro() const { return criacaoOuro; }
 	int getPontosVitoria() const { return pontosVitoria; }
 	int getConquistado() const { return conquistado; }
+	bool setConquistado(int i) { return conquistado = i;}
 };
 ostream &operator<<(ostream &os, const Territorio &t);
 

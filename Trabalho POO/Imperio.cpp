@@ -51,17 +51,17 @@ bool Imperio::verificaNomesTerritoriosCriados(const string nomeTerritorio) const
 	for (auto i : listaImperiosDisponiveis){
 		if(nomeTerritorio == i->getNomeTerritorio()){
 			return true;
-		}else{
-			return false;
 		}
 	}
+	return false;
 }
 
-void Imperio::listar(string nomeTerritorio, const Imperio &i){
+void Imperio::listar(string nomeTerritorio){
 	int existe = 0;
 	for(auto i : listaImperiosDisponiveis){
 		if (nomeTerritorio == i->getNomeTerritorio()) {
 			existe = 1;
+			cout << "\n------------------------------\n";
 			cout << i->getNomeTerritorio() << endl;
 			cout << "Resistencia: " << i->getResistencia() << endl;
 			cout << "Pontos de Vitoria: " << i->getPontosVitoria() << endl;
@@ -71,10 +71,26 @@ void Imperio::listar(string nomeTerritorio, const Imperio &i){
 				cout << "Territorio Conquistado.\n";
 			else
 				cout << "Territorio nao Conquistado.\n";
+			cout << "------------------------------\n";
 		}
 	}
 	if(existe==0)
 		cout << "Territorio nao existe.\n";	
+}
+
+bool Imperio::conquistaTerritorio(const string &nomeTerritorio){
+	if(verificaNomesTerritoriosCriados(nomeTerritorio)==true){
+		for (auto i : listaImperiosDisponiveis) {
+			if (nomeTerritorio == i->getNomeTerritorio()) {
+				i->setConquistado(1);
+				return true;
+			}
+		}
+	}else{
+		cout << "O territorio " << nomeTerritorio << " nao existe!!!\n";
+		return false;
+	}
+	return false;
 }
 
 void boasVindas(){
@@ -90,7 +106,17 @@ void comandos(){
 	cout << "  -> cria (comando usado para criar n territorios, exemplo (cria Duna 3), ira criar 3 dunas)\n";
 	cout << "Quando pretender terminar a configuracao digite 'feito'.\n";
 }
-void Imperio::carregaConfig(string nomeFicheiro, Imperio &i){
+
+void inicio(){
+	cout << "A configuracao esta completa, vamos dar agora inicio ao jogo, estes sao os comandos disponiveis: \n";
+	cout << "  -> conquista (comando usado para conquistar um territorio, exemplo (conquista Duna1), ira tentar conquistar a Duna1)\n";
+	cout << "  -> lista (comando para listar todos os territorios, se quisermos ver um em especifico passamos o nome do territorio)\n";
+	cout << "  -> passa (comando usado quando nao se pretende fazer nada no turno)\n";
+	cout << "  -> avanca (comando para continuar para o proximo turno)\n";
+	cout << "O jogo termina ao fim de 12 turnos, cada 6 turnos correspondem a 1 ano.\n";
+} 
+
+void Imperio::carregaConfig(string nomeFicheiro){
 	ifstream file(nomeFicheiro);
 	string comandoTexto, nomeTerritorio, linha;
 	int numero;
@@ -99,7 +125,7 @@ void Imperio::carregaConfig(string nomeFicheiro, Imperio &i){
 			istringstream stream(linha);
 			stream >> comandoTexto >> nomeTerritorio >> numero; //obter valores linha
 			if (comandoTexto == "cria") {
-				if (i.adicionaTerritorio(nomeTerritorio, numero) == true) {
+				if (adicionaTerritorio(nomeTerritorio, numero) == true) {
 					cout << "Territorio " << nomeTerritorio << " adicionado com sucesso!!!\n";
 				}
 				else {
@@ -112,6 +138,16 @@ void Imperio::carregaConfig(string nomeFicheiro, Imperio &i){
 		cout << "Nao foi possivel abrir o ficheiro.\n";
 	}
 	file.close();
+}
+
+string Imperio::listarImperio() const{
+	ostringstream os;
+	os << "Imperio " << getNomeImperio() << endl;
+	os << "Territorios Conquistados:\n";
+	for (auto i : listaImperiosDisponiveis)
+		if(i->getConquistado()==1)
+			os << "  -> " << i->getNomeTerritorio() << "\n";
+	return os.str();
 }
 
 ostream &operator<<(ostream &os, const Imperio &i) {
