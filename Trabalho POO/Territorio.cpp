@@ -96,11 +96,7 @@ Territorio::Territorio(string nomeTipo){
         conquistado = 0;
     }else {
         return;
-    }
-    
-    
-    
-    
+    } 
 }
 
 ostream &operator<<(ostream &os, const Territorio &t) {
