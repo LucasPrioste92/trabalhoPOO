@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 
-int tI=0;
+int tI=0; //variavel global para verificar se o territorio inicial ja foi criado
 
 string Imperio::getAsString() const {
 	ostringstream os;
