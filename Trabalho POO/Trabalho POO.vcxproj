@@ -140,13 +140,29 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Construtor.cpp" />
+    <ClCompile Include="Continente.cpp" />
+    <ClCompile Include="Ilhas.cpp" />
     <ClCompile Include="Imperio.cpp" />
+    <ClCompile Include="Interface.cpp" />
+    <ClCompile Include="Loja.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mundo.cpp" />
+    <ClCompile Include="Tecnologia.cpp" />
     <ClCompile Include="Territorio.cpp" />
+    <ClCompile Include="TerritorioInicial.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Construtor.h" />
+    <ClInclude Include="Continente.h" />
+    <ClInclude Include="Ilhas.h" />
     <ClInclude Include="Imperio.h" />
+    <ClInclude Include="Interface.h" />
+    <ClInclude Include="Loja.h" />
+    <ClInclude Include="Mundo.h" />
+    <ClInclude Include="Tecnologia.h" />
     <ClInclude Include="Territorio.h" />
+    <ClInclude Include="TerritorioInicial.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

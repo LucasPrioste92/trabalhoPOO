@@ -1,5 +1,4 @@
-﻿  Imperio.cpp
-  main.cpp
-  Territorio.cpp
-  Generating Code...
-  Trabalho POO.vcxproj -> C:\Users\lucas\Desktop\LuisPrioste_2019142028_P3_TiagoConceição_2016015546_P5\Debug\Trabalho POO.exe
+﻿  Construtor.cpp
+C:\Users\lucas\Desktop\FACULDADE\2ºano\1ºSemestre\POO\LuisPrioste_2019142028_P3_TiagoConceição_2016015546_P5\Trabalho POO\Construtor.cpp(200,17): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\lucas\Desktop\FACULDADE\2ºano\1ºSemestre\POO\LuisPrioste_2019142028_P3_TiagoConceição_2016015546_P5\Trabalho POO\Construtor.cpp(220,37): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Trabalho POO.vcxproj -> C:\Users\lucas\Desktop\FACULDADE\2ºano\1ºSemestre\POO\LuisPrioste_2019142028_P3_TiagoConceição_2016015546_P5\Debug\Trabalho POO.exe

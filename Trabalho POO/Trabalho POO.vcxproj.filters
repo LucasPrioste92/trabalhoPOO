@@ -24,12 +24,60 @@
     <ClCompile Include="Imperio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Interface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Mundo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Construtor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Continente.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Ilhas.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TerritorioInicial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tecnologia.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Loja.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Territorio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Imperio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mundo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Construtor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Continente.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ilhas.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TerritorioInicial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tecnologia.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Loja.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

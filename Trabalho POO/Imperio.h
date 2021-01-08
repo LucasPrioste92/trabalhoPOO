@@ -4,34 +4,55 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "Mundo.h"
 #include "Territorio.h"
+#include "TerritorioInicial.h"
+#include "Continente.h"
+#include "Ilhas.h"
+#include "Tecnologia.h"
+#include "Loja.h"
+
+class Loja;
+class Tecnologia;
 
 using namespace std;
 
 class Imperio{
-	vector <Territorio*> listaImperiosDisponiveis;
-	string nome;
-	string nomeImperador;
-	int turno;
+	vector <Territorio*> listaImperiosConquistados;
+	vector <Tecnologia*> tecnologiaComprada;
+	int produtos;
+	int ouro;
+	int armazem; //capacidade max 3 produtos
+	int cofre; //capacidade max 3 cofre
+	int forcaMilitar; 
+	int maxForcaMilitar; //max 5
 	int pontosVitoria;
+	int resistenciaExtra;
 public:
-	Imperio(string nomeImperio,string nomePlayer) : nome(nomeImperio),nomeImperador(nomePlayer){}; //construtor
-	bool adicionaTerritorio(const string &nomeTerritorio,int n); //adicionar territorio ao vetor
-	string getNomeImperio() const { return nome;} //obter nome Imperio
-	string getNomeImperador() const { return nomeImperador;} //obter nome Imperador
-	string getAsString() const; //obter o Imperio
-	bool setTurno(int i) {return turno = i;} //mudar o turno
+	Imperio(int forcMili,Mundo &m); //construtor
+	int getOuro() const{return ouro;}
+	bool setOuro(int o) {return ouro=o;}
+	int getProdutos()const {return produtos;}
+	bool setProdutos(int p) {return produtos=p;}
+	int getMaxForcaMilitar() const {return maxForcaMilitar;}
+	bool setMaxForcaMilitar(int m) {return maxForcaMilitar=m;}
+	int getResistenciaExtra() const{return resistenciaExtra;}
+	bool setResistenciaExtra(int r){return resistenciaExtra = r;}
 	bool setPontosVitoria(int i) { return pontosVitoria = i; } //mudar os pontos de vitoria
-	bool verificaNomesTerritoriosCriados(const string nomeTerritorio) const; //verifica se o nome passado existe no vetor
-	void listar(string nomeTerritorio); // listar as informacoes sobre um determinado territorio
-	void carregaConfig(string nomeFicheiro); //carregar ficheiro txt com a configuracao do imperio
-	string listarImperio() const; // listar todos os territorios disponiveis
-	bool conquistaTerritorio(const string &nomeTerritorio); //conquistar um determinado territorio
+	int getCofre() const{return cofre;}
+	bool setCofre(int c){return cofre=c;}
+	int getArmazem() const { return armazem; }
+	bool setArmazem(int a) { return armazem = a; }
+	bool conquistaTerritorio(const string& nomeTerritorio, Mundo& m, int fatorSorte); //conquistar um determinado territorio
+	bool compraTecnologia(const string &nomeTec, Loja &l);
+	bool verificarTecnologia(string nome) const;
+	bool verificarOuro() const { return ouro > cofre; }
+	bool verificarPro() const { return produtos > armazem; }
+	bool ajustarValoresOuro();
+	bool ajustarValoresProduto();
+	void recolher();
+	string getAsString() const;
 };
 ostream &operator<<(ostream &os, const Imperio &i); //listar imperio com territorios conquistados
-void boasVindas(); //mensagem de boas vindas com explicacao
-void comandos(); //lista comandos de configuracao
-bool verificaNomesTerritorios(string nomeVerificar); //verifica se o nome do territorio enviado existe
-void inicio(); //lista comandos a usar no jogo
 
 #endif

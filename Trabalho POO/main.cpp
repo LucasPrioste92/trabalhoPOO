@@ -3,16 +3,41 @@
 #include <string>
 #include "Territorio.h"
 #include "Imperio.h"
-
+#include "Mundo.h"
+#include "Interface.h"
+#include "main.h"
 
 using namespace std;
 int main(){
+
+    /*Mundo mundo("Mundo");
+    mundo.adicionaTerritorio("TerritorioInicial",1);
+    mundo.adicionaTerritorio("Duna", 3);
+    //mundo.adicionaTerritorio("Duna", 3);
+    mundo.adicionaTerritorio("Pescaria",2);
+    cout << mundo.getAsString();
+    Imperio imperio;
+    imperio.conquistaTerritorio("TerritorioInicial", mundo);
+    imperio.conquistaTerritorio("Duna1", mundo);
+    imperio.conquistaTerritorio("Pescaria1",mundo);
+    cout << imperio << endl;
+    mundo.alteraResistencia("Pescaria1",5);
+    cout << imperio << endl;
+    imperio.conquistaTerritorio("Pescaria2", mundo);
+    
+    cout << imperio << endl;
+    mundo.alteraResistencia("Pescaria2", 10);
+    cout << imperio << endl;*/
+
+    Interface interface;
+    interface.iniciarInterface();
+
     /* Variaveis */
-    string nomeImperador,nomeImperio,comando,arg1;
+    /*string nomeImperador,nomeImperio,comando,arg1;
     int turnos=1, arg2;
     
     /* Obter informacoes iniciais */
-    boasVindas();
+    /*boasVindas();
     cout << "Para Iniciar o jogo teremos de obter duas informacoes.\n";
     cout << "O seu nome: ";
     cin >> nomeImperador;
@@ -85,5 +110,5 @@ int main(){
     } while (turnos <= 12); //enquanto o jogo nao chega aos 2 anos
 
     cout << "\n\n\n\n\nIremos mostrar agora o seu Imperio " << imperio.getNomeImperador() << "\n";
-    cout << imperio.listarImperio() << endl;
+    cout << imperio.listarImperio() << endl;*/
 }

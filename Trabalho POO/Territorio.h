@@ -6,25 +6,30 @@
 #include <stdio.h>
 #include <string>
 
+
+class Imperio;
+
 using namespace std;
 
 class Territorio{
-	int tipoTerritorio; //0 - territorio Inicial, 1 - continente, 2 - ilha 
 	string nome;
 	int resistencia;
 	int criacaoProdutos;
 	int criacaoOuro;
 	int pontosVitoria;
-	int conquistado;  // se conquistado fica a 1 senao 0
+	Imperio *imperio = nullptr;
 public:
-	Territorio(string nomeTipo);
+	Territorio(string n, int res, int criacaoPro, int criacaoO, int pontos);
 	string getNomeTerritorio() const { return nome; }
 	int getResistencia() const { return resistencia; }
 	int getProdutos() const { return criacaoProdutos; }
 	int getCriacaoOuro() const { return criacaoOuro; }
 	int getPontosVitoria() const { return pontosVitoria; }
-	int getConquistado() const { return conquistado; }
-	bool setConquistado(int i) { return conquistado = i;}
+	int setResistencia(int r) {return resistencia = r;}
+	bool ligaImperio(Imperio*); //associar territorio a imperio
+	bool desligaImperio(Imperio*); //desassociar territorio a imperio
+	virtual bool ContinenteOuIlha() const; //true = continente, false = ilha
+	virtual string getAsString() const;
 };
 ostream &operator<<(ostream &os, const Territorio &t);
 
