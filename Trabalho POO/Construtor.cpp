@@ -5,6 +5,8 @@
 #include <fstream>
 #include <random>
 #include <ctime>
+#include <tuple>
+
 
 bool bloquearPassa = false;
 bool bloquearConquista = false;
@@ -241,6 +243,36 @@ string Construtor::acaoComando(string comando, string arg1, int arg2){
 			adquire=true;
 		}else{
 			os << "Falha a comprar a tecnologia: " << arg1 << "\n";
+		}
+	}
+		else if (comando == "grava") {
+		int x;
+		if ((x = gravaTudo->adicionaSave(mundo, arg2)) == -1)
+			cout << "\nO save < " << arg2 << ">ja se encontra guardado!\n\n";
+		else if (x == -2) {
+			std::cout << "\nO Pedido para guardar informacao foi recusado. Excepcao apanhada!!\n\n";
+		}
+		else {
+			std::cout << "\nO Save <" << arg2 << "> foi guardado com sucesso no vetor!\n\n";
+		}
+		}
+		else if (comando == "ativa") {
+		const Mundo *novo;
+		
+		if (gravaTudo->existeSave(arg2, &novo)) {
+			mundo = *novo;
+			cout << "\nO conteudo do Mundo foi atualizado de acordo com o Save!\n";
+		}
+		else {
+			std::cout << "\nO Save <" << arg2 << "> nao foi encontrado no vetor!\n\n";
+		}
+		}
+		else if (comando == "apaga") {
+		if (gravaTudo->removeSave(arg2)) {
+			std::cout << "\nO save <" << arg2 << "> foi apagado com sucesso do historico!\n\n";
+		}
+		else {
+			std::cout << "\nO save <" << arg2 << "> nao foi encontrado no vetor!>\n\n";
 		}
 	}
 	return os.str();

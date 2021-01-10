@@ -4,19 +4,21 @@
 #include <vector>
 #include <string>
 
-
 #include "Imperio.h"
 
 class Imperio;
 class Loja;
 class Mundo;
+class Grava;
 
 using namespace std;
+
 class Construtor{
 	int turno;
 	int ano;
 	int fase;
 	int fatorSorte;
+	Grava *gravaTudo = nullptr;
 	Imperio *imperio = nullptr;
 	Mundo *mundo = nullptr;
 	Loja *loja = nullptr;

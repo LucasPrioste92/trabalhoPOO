@@ -6,6 +6,7 @@
 
 class Imperio;
 class Mundo;
+class Grava;
 
 using namespace std;
 class Eventos{

@@ -1,0 +1,17 @@
+﻿  Construtor.cpp
+C:\Users\Tiago\Documents\GitHub\trabalhoPOO\Trabalho POO\Construtor.h(27,132): error C2530: 'Construtor::gravaTudo': referências devem ser inicializadas
+C:\Users\Tiago\Documents\GitHub\trabalhoPOO\Trabalho POO\Construtor.cpp(250,6): error C2027: uso de tipo indefinido 'Grava'
+C:\Users\Tiago\Documents\GitHub\trabalhoPOO\Trabalho POO\Construtor.h(12): message : consulte a declaração de 'Grava'
+C:\Users\Tiago\Documents\GitHub\trabalhoPOO\Trabalho POO\Construtor.cpp(262,6): error C2027: uso de tipo indefinido 'Grava'
+C:\Users\Tiago\Documents\GitHub\trabalhoPOO\Trabalho POO\Construtor.h(12): message : consulte a declaração de 'Grava'
+C:\Users\Tiago\Documents\GitHub\trabalhoPOO\Trabalho POO\Construtor.cpp(263,17): error C2440: '=': não é possível converter de 'const Mundo' para 'Mundo *'
+C:\Users\Tiago\Documents\GitHub\trabalhoPOO\Trabalho POO\Construtor.cpp(263,12): message : Nenhum operador de conversão definida pelo usuário disponível que possa realizar esta conversão, ou o operador não pode ser chamado
+C:\Users\Tiago\Documents\GitHub\trabalhoPOO\Trabalho POO\Construtor.cpp(271,6): error C2027: uso de tipo indefinido 'Grava'
+C:\Users\Tiago\Documents\GitHub\trabalhoPOO\Trabalho POO\Construtor.h(12): message : consulte a declaração de 'Grava'
+C:\Users\Tiago\Documents\GitHub\trabalhoPOO\Trabalho POO\Construtor.cpp(316,37): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
+C:\Users\Tiago\Documents\GitHub\trabalhoPOO\Trabalho POO\Construtor.cpp(319,10): warning C4244: 'return': conversão de 'double' para 'int', possível perda de dados
+  Interface.cpp
+C:\Users\Tiago\Documents\GitHub\trabalhoPOO\Trabalho POO\Construtor.h(27,132): error C2530: 'Construtor::gravaTudo': referências devem ser inicializadas
+  main.cpp
+C:\Users\Tiago\Documents\GitHub\trabalhoPOO\Trabalho POO\Construtor.h(27,132): error C2530: 'Construtor::gravaTudo': referências devem ser inicializadas
+  Gerando Código...

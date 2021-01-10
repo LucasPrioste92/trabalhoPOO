@@ -51,6 +51,9 @@
     <ClCompile Include="Eventos.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Grava.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Territorio.h">
@@ -84,6 +87,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Eventos.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Grava.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
