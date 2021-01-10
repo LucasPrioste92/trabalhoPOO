@@ -5,6 +5,7 @@
 #include "Tecnologia.h"
 
 class Tecnologia;
+class Imperio;
 
 using namespace std;
 class Loja{
@@ -12,5 +13,8 @@ class Loja{
 public:
 	Loja();
 	const vector<Tecnologia*> &getTecnologias() const { return tecnologiaDisponivel; }
+	bool verificarFundos(int ouro, string nomeTec, Imperio& i);
+	string getAsString() const;
 };
+ostream& operator<<(ostream& os, const Loja& l); //listar tecnologias 
 #endif

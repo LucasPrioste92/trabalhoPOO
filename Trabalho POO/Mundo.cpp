@@ -110,11 +110,18 @@ string Mundo::listaTerritorio(string nomeTerritorio) const{
 	return os.str();
 }
 
+void Mundo::atualizarValores(int turno,int ano){
+	for(auto t : territoriosDisponiveis){
+		t->mudaProdOuro(turno,ano);
+	}
+}
+
 string Mundo::getAsString() const {
 	ostringstream os;
-	os << "Territorios Criados:\n";
+	os << "Territorios Criados nao conquistados:\n";
 	for (auto i : territoriosDisponiveis){
-		os << "  -> " << i->getNomeTerritorio() << ", resistencia: " << i->getResistencia() << "\n";
+		if(i->conquistado() == false)
+			os << "  -> " << i->getNomeTerritorio() << ", resistencia: " << i->getResistencia() << "\n";
 	}
 	return os.str();
 }

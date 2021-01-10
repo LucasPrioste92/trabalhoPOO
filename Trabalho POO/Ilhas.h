@@ -18,6 +18,7 @@ public:
 class Pescaria : public Ilhas {
 public:
 	Pescaria(string nome, int res = 9, int criacaoP = 2, int criacaoO = 0) : Ilhas(nome, res, criacaoP, criacaoO) {};
+	virtual bool mudaProdOuro(int turno, int ano) override;
 };
 
 #endif

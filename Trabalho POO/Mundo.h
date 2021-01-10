@@ -25,6 +25,7 @@ public:
 	bool verificarNomes(string nomeVerificar); //funcao para verificar se o nome do territorio é possivel
 	bool verificaNomesTerritoriosCriados(const string nomeTerritorio) const; //verifica se o nome passado existe no vetor
 	string listaTerritorio(string nomeTerritorio) const; //obter informacoes sobre determinado territorio
+	void atualizarValores(int turno, int ano);
 };
 ostream& operator<<(ostream & os, const Mundo &m); //listar mundo com territorios
 #endif // !MUNDO_H 

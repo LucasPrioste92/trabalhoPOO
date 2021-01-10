@@ -10,13 +10,15 @@ void Interface::iniciarInterface(){
     string resposta;
     /* ------------------- */
     /* Iniciar Construtor e Obter Valores do Construtor */
-    Construtor construtor(0, 1);
-    int ano = construtor.getAno();
-    int turno = construtor.getTurno();
+    
     
     Loja loja;
     Mundo mundo("mundo");
     Imperio imperio(2, mundo);
+
+    Construtor construtor(1, 1,loja,mundo,imperio);
+    int ano = construtor.getAno();
+    int turno = construtor.getTurno();
     /* ----------------------------------------------- */
     cout << "Seja Bem Vindo!!!" << endl;
     do {
@@ -29,7 +31,7 @@ void Interface::iniciarInterface(){
         istringstream stream(comando);
         stream >> comando >> arg1 >> arg2; //obter valores linha
 
-        resposta = construtor.lerComando(comando, arg1, arg2,mundo,imperio);
+        resposta = construtor.lerComando(comando, arg1, arg2);
         cout << resposta << endl;
 
         turno = construtor.getTurno();

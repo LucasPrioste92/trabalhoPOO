@@ -1,19 +1,16 @@
 #ifndef IMPERIO_H
 #define IMPERIO_H
 
-#include <iostream>
-#include <string>
+
 #include <vector>
+
 #include "Mundo.h"
-#include "Territorio.h"
-#include "TerritorioInicial.h"
-#include "Continente.h"
-#include "Ilhas.h"
-#include "Tecnologia.h"
 #include "Loja.h"
 
-class Loja;
+class Mundo;
 class Tecnologia;
+class Territorio;
+class Loja;
 
 using namespace std;
 
@@ -30,6 +27,9 @@ class Imperio{
 	int resistenciaExtra;
 public:
 	Imperio(int forcMili,Mundo &m); //construtor
+	const vector<Territorio*>& getTerritoriosConquistados() const { return listaImperiosConquistados; }
+	int getForcaMilitar() const {return forcaMilitar;}
+	bool setForcaMilitar(int f) {return forcaMilitar=f;}
 	int getOuro() const{return ouro;}
 	bool setOuro(int o) {return ouro=o;}
 	int getProdutos()const {return produtos;}
@@ -43,14 +43,18 @@ public:
 	bool setCofre(int c){return cofre=c;}
 	int getArmazem() const { return armazem; }
 	bool setArmazem(int a) { return armazem = a; }
-	bool conquistaTerritorio(const string& nomeTerritorio, Mundo& m, int fatorSorte); //conquistar um determinado territorio
-	bool compraTecnologia(const string &nomeTec, Loja &l);
+	bool conquistaTerritorio(const string &nomeTerritorio, Mundo& m, int fatorSorte, int turno, int ano); //conquistar um determinado territorio
+	bool perdeTerritorio(const string &nomeTerritorio, Mundo &m);
+	bool compraTecnologia(const string& nomeTec, Loja& l);
 	bool verificarTecnologia(string nome) const;
 	bool verificarOuro() const { return ouro > cofre; }
 	bool verificarPro() const { return produtos > armazem; }
 	bool ajustarValoresOuro();
 	bool ajustarValoresProduto();
+	int recolherOuro() const;
+	int recolherProdutos() const;
 	void recolher();
+	bool maisMilitar();
 	string getAsString() const;
 };
 ostream &operator<<(ostream &os, const Imperio &i); //listar imperio com territorios conquistados

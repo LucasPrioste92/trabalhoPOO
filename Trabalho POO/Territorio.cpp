@@ -6,12 +6,22 @@ Territorio::Territorio(string n, int res, int criacaoPro, int criacaoO, int pont
     criacaoProdutos = criacaoPro;
     criacaoOuro = criacaoO;
     pontosVitoria = pontos;
+    turnoConquistado = 0;
+    anoConquistado = 0;
 }
 
-bool Territorio::ligaImperio(Imperio *i){
+bool Territorio::conquistado() const{
+    if(imperio == nullptr)
+        return false;
+    return true;
+}
+
+bool Territorio::ligaImperio(Imperio *i, int turno, int ano){
     if (imperio != nullptr || i == nullptr)
         return false;
     imperio = i;
+    turnoConquistado = turno;
+    anoConquistado = ano;
     return  true;
 }
 
@@ -24,6 +34,10 @@ bool Territorio::desligaImperio(Imperio *i){
 
 bool Territorio::ContinenteOuIlha() const{
     return false;
+}
+
+bool Territorio::mudaProdOuro(int turno, int ano){
+    return true;
 }
 
 string Territorio::getAsString() const{

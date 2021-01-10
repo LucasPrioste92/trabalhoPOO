@@ -142,6 +142,7 @@
   <ItemGroup>
     <ClCompile Include="Construtor.cpp" />
     <ClCompile Include="Continente.cpp" />
+    <ClCompile Include="Eventos.cpp" />
     <ClCompile Include="Ilhas.cpp" />
     <ClCompile Include="Imperio.cpp" />
     <ClCompile Include="Interface.cpp" />
@@ -155,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="Construtor.h" />
     <ClInclude Include="Continente.h" />
+    <ClInclude Include="Eventos.h" />
     <ClInclude Include="Ilhas.h" />
     <ClInclude Include="Imperio.h" />
     <ClInclude Include="Interface.h" />

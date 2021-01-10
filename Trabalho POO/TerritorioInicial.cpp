@@ -7,3 +7,7 @@ string TerritorioInicial::getAsString() const{
 	os << "\n------------------------------\n";
 	return os.str();
 }
+
+bool TerritorioInicial::ContinenteOuIlha() const{
+	return true;
+}

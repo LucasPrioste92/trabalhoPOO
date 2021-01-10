@@ -7,6 +7,7 @@ class TerritorioInicial : public Territorio {
 public:
 	TerritorioInicial(string nome="TerritorioInicial",int res=9,int criacaoP=1, int criacaoO=1) : Territorio(nome, res, criacaoP, criacaoO, 0) {};
 	virtual string getAsString() const override;
+	virtual bool ContinenteOuIlha() const; //true = continente, false = ilha
 };
 
 #endif

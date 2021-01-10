@@ -15,12 +15,13 @@ public:
 class Planicie : public Continente{
 public:
 	Planicie(string nome, int res = 5, int criacaoP = 1, int criacaoO = 1) : Continente(nome, res, criacaoP, criacaoO) {};
+	virtual bool mudaProdOuro(int turno, int ano) override;
 };
 
 class Montanha : public Continente {
 public:
-	Montanha(string nome, int res = 6, int criacaoP = 1, int criacaoO = 0) : Continente(nome, res, criacaoP, criacaoO) {};
-	
+	Montanha(string nome, int res = 6, int criacaoP = 0, int criacaoO = 0) : Continente(nome, res, criacaoP, criacaoO) {};
+	virtual bool mudaProdOuro(int turno, int ano) override;
 };
 
 class Fortaleza : public Continente {
@@ -31,6 +32,7 @@ public:
 class Mina : public Continente {
 public:
 	Mina(string nome, int res = 5, int criacaoP = 1, int criacaoO = 2) : Continente(nome, res, criacaoP, criacaoO) {};
+	virtual bool mudaProdOuro(int turno, int ano) override;
 };
 
 class Duna : public Continente {
@@ -41,6 +43,7 @@ public:
 class Castelo : public Continente {
 public:
 	Castelo(string nome, int res = 7, int criacaoP = 1, int criacaoO = 3) : Continente(nome, res, criacaoP, criacaoO) {};
+	virtual bool mudaProdOuro(int turno, int ano) override;
 };
 
 
