@@ -15,7 +15,7 @@ bool Tecnologia::desligaImperio(Imperio*i){
     return true;
 }
 
-bool Tecnologia::acaoTecnologia(Imperio &i){
+bool Tecnologia::acaoTecnologia(){
     return false;
 }
 
@@ -29,10 +29,11 @@ string Tecnologia::getAsString() const{
     return os.str();
 }
 
-bool DronesMilitares::acaoTecnologia(Imperio &i){
-    if (i.getMaxForcaMilitar() == maxForcaMilitar)
+bool DronesMilitares::acaoTecnologia(){
+    
+    if (imperio->getMaxForcaMilitar() == maxForcaMilitar)
         return false;
-    i.setMaxForcaMilitar(maxForcaMilitar);
+    imperio->setMaxForcaMilitar(maxForcaMilitar);
     return true;
 }
 
@@ -44,8 +45,8 @@ string DronesMilitares::getAsString() const
     return os.str();
 }
 
-bool DefesasTerritoriais::acaoTecnologia(Imperio& i){
-    i.setResistenciaExtra(resistencia);
+bool DefesasTerritoriais::acaoTecnologia(){
+    imperio->setResistenciaExtra(resistencia);
     return true;
 }
 
@@ -56,11 +57,12 @@ string DefesasTerritoriais::getAsString() const{
     return os.str();
 }
 
-bool BancoCentral::acaoTecnologia(Imperio& i){
-    if(i.getArmazem() != maxArmazem)
-        i.setArmazem(maxArmazem);
-    if (i.getCofre() != maxCofre)
-        i.setCofre(maxCofre);
+bool BancoCentral::acaoTecnologia(){
+   
+    if(imperio->getArmazem() != maxArmazem)
+        imperio->setArmazem(maxArmazem);
+    if (imperio->getCofre() != maxCofre)
+        imperio->setCofre(maxCofre);
     return true;
 }
 

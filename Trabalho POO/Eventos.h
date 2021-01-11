@@ -6,13 +6,13 @@
 
 class Imperio;
 class Mundo;
-class Grava;
 
 using namespace std;
 class Eventos{
 	string nome;
 public:
 	Eventos(string n) : nome(n){};
+	string getNome() const{return nome;}
 	virtual string acaoEvento(Imperio &i, Mundo& m, int ano, int turno);
 	virtual string getAsString() const;
 	int getRealUniform(int min, int max);

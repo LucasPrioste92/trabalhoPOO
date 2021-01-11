@@ -8,6 +8,7 @@
 #include "Imperio.h"
 #include "Mundo.h"
 #include "Loja.h"
+#include "Grava.h"
 
 
 using namespace std;

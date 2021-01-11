@@ -1,42 +1,57 @@
 #include "Grava.h"
 #include <tuple>
 
-int GravaMundo::adicionaSave(Mundo& cp, const std::string& nome) {
-
-    if (!copias.empty()) {
-        for (const auto& x : copias) {
-            if (std::get<0>(x) == nome) {
-                return -1;
-            }
-        }
+string Grava::adicionaSave(Imperio &i,Construtor &c, Mundo &m, Loja& l, const string &nomeSave) {
+    ostringstream os;
+    if (verificaNomeGrava(nomeSave) == false) {
+        copias.push_back(tuple<string, Construtor, Imperio, Mundo,Loja>(nomeSave,c,i,m,l));
+        os << "Save guardado com sucesso <" << nomeSave << ">\n";
+    }else{
+        os << "O nome do Save ja existe.\n";
     }
-    try { // pode falhar as copias --> alocacao de memoria
-        copias.emplace_back(std::make_tuple(nome, cp));
-    }
-    catch (...) {
-        removeSave(nome); // se por acaso ocorreu introducao no vetor entao remove; se nao existir nao faz nada
-        return -2;
-    }
-    return 1;
+    return os.str();
 }
 
-bool GravaMundo::removeSave(const std::string& nome) {
-    for (auto ptr = copias.begin(); ptr != copias.end(); ptr++) {
-        if (std::get<0>((*ptr)) == nome) {
-            copias.erase(ptr); // nao necessita de liberta espaco porque o objeto Mundo tem um destrutor que o faz. ao remover do vetor esse e chamado
+bool Grava::verificaNomeGrava(string nome){
+    for (auto& tuple : copias) {
+        if(get<0>(tuple)==nome){
             return true;
         }
     }
     return false;
 }
 
-bool GravaMundo::existeSave(const std::string& nome, const Mundo** novo) const {
+string Grava::removeSave(const string &nome) {
+    ostringstream os;
+    auto it = copias.begin();
+    while (it < copias.end()) {
+        if (get<0>(*it) == nome) {
+            copias.erase(it);
+            os << "Apagado com sucesso <" << nome <<">\n";
+            return os.str();
+        }
+        it++;
+    }
+    os << "A gravacao com o nome <" << nome << "> nao existe.\n";
+    return os.str();
+}
 
-    for (auto& x : copias) {
-        if (std::get<0>(x) == nome) {
-            *novo = &(std::get<1>(x));
-            return true;
+string Grava::carregaSave(const string& nome,Imperio& i, Construtor& c, Mundo &m, Loja& l){
+    ostringstream os;
+    for (auto &cop : copias) {
+        if (get<0>(cop) == nome) {
+            
+            c = get<1>(cop);
+            i = get<2>(cop);
+            m = get<3>(cop);
+            l = get<4>(cop);
+            /*for(auto ter : m.getTerritorios()){
+                ter->atualizaImperio(&i,c.getTurno(),c.getAno());
+            }*/
+            os << "Carregado com sucesso <" << nome << ">\n";
+            return os.str();
         }
     }
-    return false;
+    os << "A gravacao com o nome <" << nome << "> nao existe.\n";
+    return os.str();
 }

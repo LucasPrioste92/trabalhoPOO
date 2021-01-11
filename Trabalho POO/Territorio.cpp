@@ -25,6 +25,20 @@ bool Territorio::ligaImperio(Imperio *i, int turno, int ano){
     return  true;
 }
 
+bool Territorio::atualizaImperio(Imperio*i, int turno, int ano)
+{
+    if (imperio != nullptr){
+        imperio = i;
+        turnoConquistado = turno;
+        anoConquistado = ano;
+        return  true;
+    }else{
+        imperio = nullptr;
+    }
+    return false;
+    
+}
+
 bool Territorio::desligaImperio(Imperio *i){
     if (imperio != i)
         return false;

@@ -1,6 +1,7 @@
 #include "Imperio.h"
 #include <fstream>
 #include <string>
+#include <vector>
 
 int tI=0; //variavel global para verificar se o territorio inicial ja foi criado
 
@@ -13,7 +14,7 @@ bool verificaNomesTerritorios(string nomeVerificar) {
 	return false;
 }
 
-Imperio::Imperio(int forcMili, Mundo& m) {
+Imperio::Imperio(int forcMili, Mundo& m, Loja& l) {
 	forcaMilitar = forcMili;
 	armazem = 3;
 	cofre = 3;
@@ -21,20 +22,35 @@ Imperio::Imperio(int forcMili, Mundo& m) {
 	ouro = 0;
 	produtos = 0;
 	resistenciaExtra = false;
-	m.adicionaTerritorio("TerritorioInicial", 1);
-	conquistaTerritorio("TerritorioInicial",m,0,0,0);
+	loja = &l;
+	mundo = &m;
+	mundo->adicionaTerritorio("TerritorioInicial", 1);
+	tomaAssalto("TerritorioInicial",0,0);
 }
 
-bool Imperio::conquistaTerritorio(const string &nomeTerritorio, Mundo &m, int fatorSorte,int turno,int ano){
+bool Imperio::atualizarPontos(){
+	for(auto i : listaImperiosConquistados){
+		pontosVitoria += i->getPontosVitoria();
+	}
+	return true;
+}
+
+int Imperio::pontuacaoFinal(){
+	pontosVitoria += tecnologiaComprada.size();
+	if(tecnologiaComprada.size() == loja->getTecnologias().size()){
+		pontosVitoria += 1;
+	}
+	if(listaImperiosConquistados.size() == mundo->getTerritorios().size()){
+		pontosVitoria += 3;
+	}
+	return pontosVitoria;
+}
+
+bool Imperio::conquistaTerritorio(const string &nomeTerritorio, int fatorSorte,int turno,int ano){
 	bool existe=false;
-	for (auto i : m.getTerritorios()) {
+	for (auto i : mundo->getTerritorios()) {
 		if (nomeTerritorio == i->getNomeTerritorio()) {
-			if(fatorSorte==0){
-				if (i->ligaImperio(this, turno, ano) == false)
-					return false;
-				listaImperiosConquistados.push_back(i);
-				return true;
-			}
+			
 			int totalForca = fatorSorte + forcaMilitar;
 			if(i->ContinenteOuIlha() == false){ //é ilha, fazer verificacoes
 				int nTerritoriosConquistados = listaImperiosConquistados.size();
@@ -59,23 +75,29 @@ bool Imperio::conquistaTerritorio(const string &nomeTerritorio, Mundo &m, int fa
 	}
 	return false;
 }
-bool Imperio::perdeTerritorio(const string& nomeTerritorio, Mundo& m)
+Territorio *Imperio::perdeTerritorio(const string& nomeTerritorio)
 {
-	for (int i=0; i< listaImperiosConquistados.size();i++) {
-		if (nomeTerritorio == listaImperiosConquistados[i]->getNomeTerritorio()) {
-			listaImperiosConquistados[i]->desligaImperio(this);
-			listaImperiosConquistados.erase(listaImperiosConquistados.begin()+i);
-			return true;
+	auto it = listaImperiosConquistados.begin();
+	while (it < listaImperiosConquistados.end()) {
+		if ((*it)->getNomeTerritorio() == nomeTerritorio) {
+			Territorio* out = *it;
+			if (out->desligaImperio(this) == false)
+				return nullptr;
+			listaImperiosConquistados.erase(it);
+			return out;
 		}
+		it++;
 	}
-	return false;
-}
-bool Imperio::compraTecnologia(const string& nomeTec, Loja& l){
+	return nullptr;
 	
-	if(l.verificarFundos(ouro, nomeTec, *this)==true){
-		for (auto t : l.getTecnologias()) {
+}
+bool Imperio::compraTecnologia(const string& nomeTec){
+	
+	if(loja->verificarFundos(ouro, nomeTec, *this)==true){
+		for (auto t : loja->getTecnologias()) {
 			if (nomeTec == t->getNome()) {
 				tecnologiaComprada.push_back(t);
+				t->acaoTecnologia();
 				return true;
 			}
 		}
@@ -146,6 +168,53 @@ bool Imperio::maisMilitar(){
 		}
 	}
 	return false;
+}
+string Imperio::tomaAssalto(string arg2,int turno,int ano){
+	ostringstream os;
+	for(auto t: mundo->getTerritorios()){
+		if(t->getNomeTerritorio() == arg2){
+			if (t->ligaImperio(this, turno, ano) == false){
+				os << "Ja Conquistado <" << arg2 << ">\n";
+				return os.str();
+			}
+			listaImperiosConquistados.push_back(t);
+			os << "Conquistado <" << arg2 << ">\n";
+			return os.str();
+		}
+	}
+	os << "Nao existe <" << arg2 << ">\n";
+	return os.str();
+}
+string Imperio::tomaAssaltoTec(string arg2){
+	ostringstream os;
+	
+	for (auto t : loja->getTecnologias()) {
+		if (arg2 == t->getNome()) {
+			if (t->ligaImperio(this) == false) {
+				os << "Tecnologia ja adquirida.\n";
+				return os.str();
+			}
+			tecnologiaComprada.push_back(t);
+			t->acaoTecnologia();
+			os << "Tecnologia adquirida <" << arg2 << ">\n";
+			return os.str();
+		}
+	}
+	
+
+	/*for(auto l: loja->getTecnologias()){
+		if(l->getNome() == arg2){
+			if (l->ligaImperio(this) == false) {
+				os << "Ja tem tecnologia <" << arg2 << ">\n";
+				return os.str();
+			}
+			tecnologiaComprada.push_back(l);
+			os << "Tecnologia adquirida <" << arg2 << ">\n";
+			return os.str();
+		}
+	}
+	os << "Nao existe essa tecnologia <" << arg2 << ">\n";*/
+	return os.str();
 }
 string Imperio::getAsString() const{
 	ostringstream os;

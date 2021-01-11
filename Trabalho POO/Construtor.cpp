@@ -1,18 +1,29 @@
 ﻿#include "Construtor.h"
+#include "Grava.h"
 
 #include <sstream>
 #include <iostream>
 #include <fstream>
 #include <random>
 #include <ctime>
-#include <tuple>
-
 
 bool bloquearPassa = false;
 bool bloquearConquista = false;
 bool compraFeita = false;
 bool adquire = false;
 bool bloquearTrocas = false;
+bool primeiraVez = true;
+bool fase4Pri = true;
+
+
+Construtor::Construtor(int t, int a, Loja& l, Mundo& m, Imperio& i, Grava &g){
+	turno=t, ano=a, fatorSorte=0, fase=0, loja=&l, mundo=&m, imperio=&i,evento=0,grava=&g;
+	eventosPossiveis.push_back(new RecursoAbandonado);
+	eventosPossiveis.push_back(new Invasao);
+	eventosPossiveis.push_back(new AliancaDiplomatica);
+	eventosPossiveis.push_back(new SemEvento);
+}
+
 
 
 string Construtor::avancaFase(){
@@ -26,23 +37,40 @@ string Construtor::avancaFase(){
 	return os.str();
 }
 
-string Construtor::lerComando(string comando, string arg1, int arg2){
+string Construtor::lerComando(string comando){
     ostringstream os;
-    if(comandosExistentes(comando)==false){
-        os << "Comando <" << comando << "> nao existe!!!";
+
+	string comandoPrincipal,arg1,arg2Toma;
+	int arg2;
+
+	istringstream stream(comando);
+	stream >> comandoPrincipal >> arg1 >> arg2; //obter valor comando
+
+	if (comandoPrincipal == "toma"){
+		istringstream stream2(comando);
+		stream2 >> comandoPrincipal >> arg1 >> arg2Toma;
+	}
+
+    if(comandosExistentes(comandoPrincipal)==false){
+        os << "Comando <" << comandoPrincipal << "> nao existe!!!";
         return os.str();
     }
-    if (comando == "carrega") {
+
+    if (comandoPrincipal == "carrega") {
 		ifstream file(arg1);
-		string comandoFile, arg1File, linha;
+		string comandoFile, arg1File, arg2TomaFile, linha;
 		int arg2File;
 		if (file.is_open()) {
 			while (getline(file, linha) && turno <= 6 && ano <= 2) {
 				istringstream stream(linha);
 				stream >> comandoFile >> arg1File >> arg2File; //obter valores linha
-				os << tratarComando(comandoFile,arg1File,arg2File) << "\n";
+				if(comandoFile == "toma")
+					stream >> comandoFile >> arg1File >> arg2TomaFile;
+
+				os << tratarComando(comandoFile,arg1File,arg2File,arg2TomaFile) << "\n";
 				comandoFile.clear();
 				arg1File.clear();
+				arg2TomaFile.clear();
 				arg2File = 0;
 			}
 		}else {
@@ -50,7 +78,7 @@ string Construtor::lerComando(string comando, string arg1, int arg2){
 		}
 		file.close();
     }else{
-        os << tratarComando(comando,arg1,arg2);
+        os << tratarComando(comandoPrincipal,arg1,arg2,arg2Toma);
     }
     return os.str();
 }
@@ -62,15 +90,26 @@ bool Construtor::comandosExistentes(string comando){
     return false;
 }
 
-string Construtor::tratarComando(string comando, string arg1, int arg2){
+string Construtor::tratarComando(string comando, string arg1, int arg2, string arg2Toma){
 	ostringstream os;
-	string comandosDebug[3] = {"toma","modifica","fevento"};
+	string comandosDebug[6] = {"toma","modifica","fevento","grava","ativa","apaga"};
 
 	mundo->atualizarValores(turno, ano); // atualizar os valores dos territorios
 
-	for (int z = 0; z <= 3; z++) {
+	if(primeiraVez==true){ //se for a primeira vez a entrar sorteia um evento
+		default_random_engine re;
+		evento = getRealUniform(0, eventosPossiveis.size()-1);
+		primeiraVez = false;
+	}
+
+	for (int z = 0; z <= 6; z++) {
 		if (comando == comandosDebug[z] || comando == "lista") {
-			os << acaoComando(comando, arg1, arg2);
+			if(comando == "toma"){
+				os << acaoComandoToma(comando,arg1,arg2Toma);
+			}else{
+				os << acaoComando(comando, arg1, arg2);
+			}
+			
 			return os.str();
 		}
 	}
@@ -113,7 +152,10 @@ string Construtor::tratarComando(string comando, string arg1, int arg2){
 		}
 		
 	}else if (fase == 4) {
-		os << acaoComando(comando, arg1, arg2);
+		if(comando=="avanca")
+			os << acaoComando(comando, arg1, arg2);
+		else
+			os << "O comando <" << comando << "> nao pode ser utilizado neste momento.";
 	}
 	return os.str();
 }
@@ -127,7 +169,7 @@ string Construtor::acaoComando(string comando, string arg1, int arg2){
 			os << "Algo correu mal, Territorio <" << arg1 << "> nao adicionado.";
 	}
 	else if (comando == "lista") {
-		os << listaMundo(arg1);
+		os << lista(arg1);
 	}
 	else if (comando == "conquista") {
 		bloquearPassa = true;
@@ -152,6 +194,8 @@ string Construtor::acaoComando(string comando, string arg1, int arg2){
 			compraFeita = false;
 			adquire = false;
 			bloquearTrocas = false;
+			primeiraVez = true;
+			fase4Pri = true;
 			os << "Turno a comecar: " << turno << ", Ano: " << ano << "\n";
 			os << avancaFase();
 		}else{
@@ -159,6 +203,15 @@ string Construtor::acaoComando(string comando, string arg1, int arg2){
 			if(fase==2){
 				imperio->recolher();
 				os << "Recolhidos produtos e ouro\n";
+			}else if(fase==4){
+				if (fase4Pri == true) {
+					os << eventosPossiveis[evento]->acaoEvento(*imperio, *mundo, ano, turno);
+					if (imperio->getTerritoriosConquistados().size() == 0) {
+						turno = 1; //para terminar o jogo, sem territorios
+						ano = 3;
+					}
+					fase4Pri = false;
+				}
 			}
 		}
 		bloquearConquista = false;
@@ -238,42 +291,47 @@ string Construtor::acaoComando(string comando, string arg1, int arg2){
 			os << "Ja comprou tecnologia neste turno.";
 			return os.str();
 		}
-		if(imperio->compraTecnologia(arg1,*loja)==true){
+		if(imperio->compraTecnologia(arg1)==true){
 			os << "Comprou com sucesso a tecnologia: " << arg1 << "\n";
 			adquire=true;
 		}else{
 			os << "Falha a comprar a tecnologia: " << arg1 << "\n";
 		}
+	}else if (comando == "modifica") {
+		if (arg1 == "ouro"){
+			imperio->setOuro(imperio->getOuro()+arg2);
+		}else if(arg1=="prod"){
+			imperio->setProdutos(imperio->getProdutos() + arg2);
+		}
+	}else if (comando == "fevento") {
+		int tamanho = eventosPossiveis.size();
+		for(int i=0; i < tamanho; i++){
+			if(eventosPossiveis[i]->getNome() == arg1){
+				evento = i;
+				primeiraVez=false;
+			}
+		}
+	}else if(comando=="grava"){
+		os << grava->adicionaSave(*imperio,*this,*mundo,*loja,arg1);
+	}else if(comando=="ativa"){
+		os << grava->carregaSave(arg1,*imperio,*this,*mundo,*loja);
+	}else if (comando == "apaga") {
+		os << grava->removeSave(arg1);
 	}
-		else if (comando == "grava") {
-		int x;
-		if ((x = gravaTudo->adicionaSave(mundo, arg2)) == -1)
-			cout << "\nO save < " << arg2 << ">ja se encontra guardado!\n\n";
-		else if (x == -2) {
-			std::cout << "\nO Pedido para guardar informacao foi recusado. Excepcao apanhada!!\n\n";
+	return os.str();
+}
+
+string Construtor::acaoComandoToma(string comando, string arg1, string arg2){
+	ostringstream os;
+	if (comando == "toma") {
+		if (arg1 == "terr") {
+			os << imperio->tomaAssalto(arg2,turno,ano) << "\n";
 		}
-		else {
-			std::cout << "\nO Save <" << arg2 << "> foi guardado com sucesso no vetor!\n\n";
+		else if (arg1 == "tec") {
+			os << imperio->tomaAssaltoTec(arg2) << "\n";
 		}
-		}
-		else if (comando == "ativa") {
-		const Mundo *novo;
-		
-		if (gravaTudo->existeSave(arg2, &novo)) {
-			mundo = *novo;
-			cout << "\nO conteudo do Mundo foi atualizado de acordo com o Save!\n";
-		}
-		else {
-			std::cout << "\nO Save <" << arg2 << "> nao foi encontrado no vetor!\n\n";
-		}
-		}
-		else if (comando == "apaga") {
-		if (gravaTudo->removeSave(arg2)) {
-			std::cout << "\nO save <" << arg2 << "> foi apagado com sucesso do historico!\n\n";
-		}
-		else {
-			std::cout << "\nO save <" << arg2 << "> nao foi encontrado no vetor!>\n\n";
-		}
+		else
+			os << "O argumento <" << arg1 << "> nao e valido\n";
 	}
 	return os.str();
 }
@@ -285,22 +343,23 @@ bool Construtor::adicionaTerritorio(string nomeTerritorio, int arg2){
 string Construtor::conquistaTerritorio(string nomeTerritorio){
 	ostringstream os;
 	default_random_engine re;
+	for(int i=0;i<20;i++){
+		cout << getRealUniform(1,6) << " ";
+	}
 	fatorSorte = getRealUniform(1, 6);
 	
-	if (imperio->conquistaTerritorio(nomeTerritorio, *mundo, fatorSorte,turno,ano) == true)
+	if (imperio->conquistaTerritorio(nomeTerritorio, fatorSorte,turno,ano) == true){
 		os << "Territorio <" << nomeTerritorio << "> conquistado com sucesso.";
+		imperio->atualizarPontos();
+	}
 	else
 		os << "Territorio <" << nomeTerritorio << "> nao foi conquistado.";
 	return os.str();
 }
 
-string Construtor::listaMundo(string arg1){
+string Construtor::lista(string arg1){
 	ostringstream os;
 	
-		
-		
-		//● Evento que vai ocorrer(nome, resumo dos efeitos)
-		//● Pontuação final
 	os << "Turno: " << turno << ", ano: " << ano << ", ultimo fator sorte: " << fatorSorte << "\n";
 	os << *imperio;
 	if(arg1.empty())
@@ -308,13 +367,17 @@ string Construtor::listaMundo(string arg1){
 	else
 		os << mundo->listaTerritorio(arg1);
 	os << *loja;
+	os << eventosPossiveis[evento]->getAsString();
+	os << "Pontuacao: " << imperio->getPontuacao() << "\n";
 	return os.str();
 }
 
 int Construtor::getRealUniform(int min, int max) {
-	max++;
-	static default_random_engine e(time(0));
-	static uniform_real_distribution<double> d(min, max);
+	//use time to get seed value for srand
+	srand((unsigned int)time(NULL));
 
-	return d(e);
+	// generate random number between min and max
+	int rNum = (min)+(rand() % (max));
+
+	return rNum;
 }

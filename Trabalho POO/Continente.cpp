@@ -28,8 +28,8 @@ bool Montanha::mudaProdOuro(int turno, int ano){
 	if(auxiliarTurno==0)
 		return true;
 	if(ano==2){ //colocar os turnos de 1 a 12 para poder ser mais facil verificar se foi conquistado a 2 turnos
-		turno+6;
-		auxiliarTurno +6;
+		turno += 6;
+		auxiliarTurno += 6;
 	}
 	if (turno - auxiliarTurno == 0 || turno - auxiliarTurno == 1) {
 		criacaoOuro = 0;

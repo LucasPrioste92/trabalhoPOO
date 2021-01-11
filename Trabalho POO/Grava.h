@@ -1,20 +1,21 @@
 #ifndef GRAVA
 #define GRAVA
 
-#include "Mundo.h"
+#include "Construtor.h"
 #include <tuple>
 
+class Construtor;
 
-class GravaMundo
-{
-private:
-	vector<tuple<string, Mundo>> copias;
+using namespace std;
+class Grava{
+	vector<tuple<string, Construtor,Imperio,Mundo, Loja>> copias;
 public:
-	GravaMundo() = default;
-	int adicionaSave(Mundo& cp, const string& nome);
-	bool removeSave(const string& nome);
-	bool existeSave(const string& nome, const Mundo** novo) const;
-	~GravaMundo() = default;
+	Grava() = default;
+	string adicionaSave(Imperio& i, Construtor& c, Mundo& m, Loja& l, const string& nomeSave);
+	bool verificaNomeGrava(string nome);
+	string removeSave(const string& nome);
+	string carregaSave(const string& nome, Imperio& i, Construtor& c, Mundo &m, Loja& l);
+	~Grava() = default;
 };
 
 

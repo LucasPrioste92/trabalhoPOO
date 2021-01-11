@@ -30,8 +30,9 @@ public:
 	int getPontosVitoria() const { return pontosVitoria; }
 	int setResistencia(int r) {return resistencia = r;}
 	bool conquistado() const;
-	virtual bool ligaImperio(Imperio*,int turno,int ano); //associar territorio a imperio
-	virtual bool desligaImperio(Imperio*); //desassociar territorio a imperio
+	bool ligaImperio(Imperio*,int turno,int ano); //associar territorio a imperio
+	bool atualizaImperio(Imperio *, int turno,int ano);
+	bool desligaImperio(Imperio*); //desassociar territorio a imperio
 	virtual bool ContinenteOuIlha() const; //true = continente, false = ilha
 	virtual bool mudaProdOuro(int turno,int ano);
 	virtual string getAsString() const;

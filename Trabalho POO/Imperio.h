@@ -17,6 +17,8 @@ using namespace std;
 class Imperio{
 	vector <Territorio*> listaImperiosConquistados;
 	vector <Tecnologia*> tecnologiaComprada;
+	Mundo *mundo = nullptr;
+	Loja *loja = nullptr;
 	int produtos;
 	int ouro;
 	int armazem; //capacidade max 3 produtos
@@ -26,8 +28,11 @@ class Imperio{
 	int pontosVitoria;
 	int resistenciaExtra;
 public:
-	Imperio(int forcMili,Mundo &m); //construtor
+	Imperio(int forcMili,Mundo &m, Loja &l); //construtor
 	const vector<Territorio*>& getTerritoriosConquistados() const { return listaImperiosConquistados; }
+	int getPontuacao() const {return pontosVitoria;}
+	bool atualizarPontos();
+	int pontuacaoFinal();
 	int getForcaMilitar() const {return forcaMilitar;}
 	bool setForcaMilitar(int f) {return forcaMilitar=f;}
 	int getOuro() const{return ouro;}
@@ -43,9 +48,9 @@ public:
 	bool setCofre(int c){return cofre=c;}
 	int getArmazem() const { return armazem; }
 	bool setArmazem(int a) { return armazem = a; }
-	bool conquistaTerritorio(const string &nomeTerritorio, Mundo& m, int fatorSorte, int turno, int ano); //conquistar um determinado territorio
-	bool perdeTerritorio(const string &nomeTerritorio, Mundo &m);
-	bool compraTecnologia(const string& nomeTec, Loja& l);
+	bool conquistaTerritorio(const string &nomeTerritorio, int fatorSorte, int turno, int ano); //conquistar um determinado territorio
+	Territorio *perdeTerritorio(const string &nomeTerritorio);
+	bool compraTecnologia(const string& nomeTec);
 	bool verificarTecnologia(string nome) const;
 	bool verificarOuro() const { return ouro > cofre; }
 	bool verificarPro() const { return produtos > armazem; }
@@ -55,6 +60,8 @@ public:
 	int recolherProdutos() const;
 	void recolher();
 	bool maisMilitar();
+	string tomaAssalto(string arg2, int turno, int ano);
+	string tomaAssaltoTec(string arg2);
 	string getAsString() const;
 };
 ostream &operator<<(ostream &os, const Imperio &i); //listar imperio com territorios conquistados

@@ -1,14 +1,2 @@
-﻿  Construtor.cpp
-C:\Users\lucas\Desktop\FACULDADE\2ºano\1ºSemestre\POO\LuisPrioste_2019142028_P3_TiagoConceição_2016015546_P5\Trabalho POO\Construtor.cpp(284,37): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\lucas\Desktop\FACULDADE\2ºano\1ºSemestre\POO\LuisPrioste_2019142028_P3_TiagoConceição_2016015546_P5\Trabalho POO\Construtor.cpp(287,10): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
-  Eventos.cpp
-C:\Users\lucas\Desktop\FACULDADE\2ºano\1ºSemestre\POO\LuisPrioste_2019142028_P3_TiagoConceição_2016015546_P5\Trabalho POO\Eventos.cpp(19,40): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\lucas\Desktop\FACULDADE\2ºano\1ºSemestre\POO\LuisPrioste_2019142028_P3_TiagoConceição_2016015546_P5\Trabalho POO\Eventos.cpp(22,13): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
-  Imperio.cpp
-C:\Users\lucas\Desktop\FACULDADE\2ºano\1ºSemestre\POO\LuisPrioste_2019142028_P3_TiagoConceição_2016015546_P5\Trabalho POO\Imperio.cpp(64,17): warning C4018: '<': signed/unsigned mismatch
-  Interface.cpp
-  Loja.cpp
-  Tecnologia.cpp
-  main.cpp
-  Generating Code...
+﻿  Grava.cpp
   Trabalho POO.vcxproj -> C:\Users\lucas\Desktop\FACULDADE\2ºano\1ºSemestre\POO\LuisPrioste_2019142028_P3_TiagoConceição_2016015546_P5\Debug\Trabalho POO.exe
