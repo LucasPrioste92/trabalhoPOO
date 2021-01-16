@@ -25,19 +25,6 @@ bool Territorio::ligaImperio(Imperio *i, int turno, int ano){
     return  true;
 }
 
-bool Territorio::atualizaImperio(Imperio*i, int turno, int ano)
-{
-    if (imperio != nullptr){
-        imperio = i;
-        turnoConquistado = turno;
-        anoConquistado = ano;
-        return  true;
-    }else{
-        imperio = nullptr;
-    }
-    return false;
-    
-}
 
 bool Territorio::desligaImperio(Imperio *i){
     if (imperio != i)
@@ -46,13 +33,8 @@ bool Territorio::desligaImperio(Imperio *i){
     return true;
 }
 
-bool Territorio::ContinenteOuIlha() const{
-    return false;
-}
 
-bool Territorio::mudaProdOuro(int turno, int ano){
-    return true;
-}
+
 
 string Territorio::getAsString() const{
     ostringstream os;

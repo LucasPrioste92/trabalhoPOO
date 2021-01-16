@@ -4,6 +4,18 @@
 bool tI = false; //variavel global para verificar se o territorio inicial ja foi criado
 int countP, countM, countF, countMI, countD, countC, countRI, countPI;
 
+Mundo& Mundo::operator=(const Mundo& m){
+	if (this == &m)
+		return *this;
+	nome = m.nome;
+	
+	territoriosDisponiveis.clear();
+	for (auto m : m.territoriosDisponiveis) {
+		territoriosDisponiveis.push_back(m);
+	}
+	return *this;
+}
+
 bool Mundo::adicionaTerritorio(string nomeTerritorio, int n){
 	int i;
 	if (n < 1)

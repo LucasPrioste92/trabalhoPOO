@@ -11,3 +11,8 @@ string TerritorioInicial::getAsString() const{
 bool TerritorioInicial::ContinenteOuIlha() const{
 	return true;
 }
+
+bool TerritorioInicial::mudaProdOuro(int turno, int ano)
+{
+	return false;
+}

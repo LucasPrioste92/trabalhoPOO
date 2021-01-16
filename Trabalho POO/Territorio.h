@@ -29,13 +29,15 @@ public:
 	int getCriacaoOuro() const { return criacaoOuro; }
 	int getPontosVitoria() const { return pontosVitoria; }
 	int setResistencia(int r) {return resistencia = r;}
+	int getTurno() const{return turnoConquistado;}
+	int getAno() const{return anoConquistado;}
 	bool conquistado() const;
 	bool ligaImperio(Imperio*,int turno,int ano); //associar territorio a imperio
-	bool atualizaImperio(Imperio *, int turno,int ano);
 	bool desligaImperio(Imperio*); //desassociar territorio a imperio
-	virtual bool ContinenteOuIlha() const; //true = continente, false = ilha
-	virtual bool mudaProdOuro(int turno,int ano);
+	virtual bool ContinenteOuIlha() const = 0; //true = continente, false = ilha
+	virtual bool mudaProdOuro(int turno,int ano) = 0;
 	virtual string getAsString() const;
+	virtual ~Territorio() {};
 };
 ostream &operator<<(ostream &os, const Territorio &t);
 

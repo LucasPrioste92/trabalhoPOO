@@ -16,6 +16,7 @@ class Interface{
 public:
 	Interface(){};
 	void iniciarInterface();
+	~Interface() = default;
 };
 
 #endif

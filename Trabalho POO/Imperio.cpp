@@ -28,6 +28,38 @@ Imperio::Imperio(int forcMili, Mundo& m, Loja& l) {
 	tomaAssalto("TerritorioInicial",0,0);
 }
 
+Imperio& Imperio::operator=(const Imperio& i){
+	if (this == &i)
+		return *this;
+	mundo = i.mundo;
+	loja = i.loja;
+	produtos = i.produtos;
+	ouro = i.ouro;
+	armazem = i.armazem;
+	cofre = i.cofre;
+	forcaMilitar = i.forcaMilitar;
+	maxForcaMilitar = i.maxForcaMilitar;
+	pontosVitoria = i.pontosVitoria;
+	resistenciaExtra = i.resistenciaExtra;
+	for (auto t : listaImperiosConquistados){
+		t->desligaImperio(this);
+	}
+	listaImperiosConquistados.clear();
+	for (auto t : tecnologiaComprada){
+		t->desligaImperio(this);
+	}
+	tecnologiaComprada.clear();
+	for (auto t : i.listaImperiosConquistados){
+		t->ligaImperio(this,t->getTurno(),t->getAno());
+		listaImperiosConquistados.push_back(t);	
+	}
+	for (auto t : i.tecnologiaComprada) {
+		t->ligaImperio(this);
+		tecnologiaComprada.push_back(t);
+	}
+	return *this;
+}
+
 bool Imperio::atualizarPontos(){
 	for(auto i : listaImperiosConquistados){
 		pontosVitoria += i->getPontosVitoria();
@@ -36,7 +68,8 @@ bool Imperio::atualizarPontos(){
 }
 
 int Imperio::pontuacaoFinal(){
-	pontosVitoria += tecnologiaComprada.size();
+	if(tecnologiaComprada.size()>=1)
+		pontosVitoria += tecnologiaComprada.size();
 	if(tecnologiaComprada.size() == loja->getTecnologias().size()){
 		pontosVitoria += 1;
 	}

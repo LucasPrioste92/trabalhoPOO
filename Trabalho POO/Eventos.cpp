@@ -4,9 +4,7 @@
 #include <random>
 #include <time.h>
 
-string Eventos::acaoEvento(Imperio& i, Mundo& m,int ano,int turno){
-    return string();
-}
+
 
 string Eventos::getAsString() const{
     ostringstream os;

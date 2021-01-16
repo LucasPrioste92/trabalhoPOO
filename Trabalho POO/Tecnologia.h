@@ -20,6 +20,7 @@ public:
 	bool desligaImperio(Imperio*); //desassociar territorio a imperio
 	virtual bool acaoTecnologia();
 	virtual string getAsString() const;
+	~Tecnologia() = default;
 };
 ostream& operator<<(ostream& os, const Tecnologia& t); //listar tecnologias 
 

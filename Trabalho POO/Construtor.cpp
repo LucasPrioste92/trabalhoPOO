@@ -16,12 +16,40 @@ bool primeiraVez = true;
 bool fase4Pri = true;
 
 
-Construtor::Construtor(int t, int a, Loja& l, Mundo& m, Imperio& i, Grava &g){
+Construtor::Construtor(int t, int a, Loja& l, Mundo& m, Imperio& i,Grava &g){
 	turno=t, ano=a, fatorSorte=0, fase=0, loja=&l, mundo=&m, imperio=&i,evento=0,grava=&g;
 	eventosPossiveis.push_back(new RecursoAbandonado);
 	eventosPossiveis.push_back(new Invasao);
 	eventosPossiveis.push_back(new AliancaDiplomatica);
 	eventosPossiveis.push_back(new SemEvento);
+}
+
+Construtor& Construtor::operator=(const Construtor& c)
+{
+	if (this == &c)
+		return *this;
+	turno = c.turno;
+	ano = c.ano;
+	fase = c.fase;
+	fatorSorte = c.fatorSorte;
+	evento = c.evento;
+	imperio = c.imperio;
+	mundo = c.mundo;
+	loja = c.loja;
+	grava = c.grava;
+	vector <Eventos*> eventosPossiveis;
+	vector <string> comandos;
+	
+	eventosPossiveis.clear();
+	for (auto e : c.eventosPossiveis) {
+		eventosPossiveis.push_back(e);
+	}
+	comandos.clear();
+	for (auto c : c.comandos) {
+		comandos.push_back(c);
+	}
+	
+	return *this;
 }
 
 
@@ -126,6 +154,7 @@ string Construtor::tratarComando(string comando, string arg1, int arg2, string a
 	
 	
 	if(fase==1){ //se a fase for 1
+		imperio->atualizarPontos(); //atualizar os pontos
 		if(comando=="conquista" && bloquearConquista==false)
 			os << acaoComando(comando, arg1, arg2);
 		else if(comando=="passa" && bloquearPassa==false){
@@ -311,12 +340,15 @@ string Construtor::acaoComando(string comando, string arg1, int arg2){
 				primeiraVez=false;
 			}
 		}
-	}else if(comando=="grava"){
-		os << grava->adicionaSave(*imperio,*this,*mundo,*loja,arg1);
-	}else if(comando=="ativa"){
-		os << grava->carregaSave(arg1,*imperio,*this,*mundo,*loja);
-	}else if (comando == "apaga") {
-		os << grava->removeSave(arg1);
+	}
+	else if (comando == "grava") {
+	os << grava->adicionaSave(*imperio, *this, *mundo, *loja, arg1);
+	}
+	else if (comando == "ativa") {
+	os << grava->carregaSave(arg1, *imperio, *this, *mundo);
+	}
+	else if (comando == "apaga") {
+	os << grava->removeSave(arg1);
 	}
 	return os.str();
 }
@@ -343,9 +375,7 @@ bool Construtor::adicionaTerritorio(string nomeTerritorio, int arg2){
 string Construtor::conquistaTerritorio(string nomeTerritorio){
 	ostringstream os;
 	default_random_engine re;
-	for(int i=0;i<20;i++){
-		cout << getRealUniform(1,6) << " ";
-	}
+	
 	fatorSorte = getRealUniform(1, 6);
 	
 	if (imperio->conquistaTerritorio(nomeTerritorio, fatorSorte,turno,ano) == true){

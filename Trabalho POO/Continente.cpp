@@ -70,3 +70,13 @@ bool Castelo::mudaProdOuro(int turno, int ano){
 	}
 	return false;
 }
+
+bool Fortaleza::mudaProdOuro(int turno, int ano)
+{
+	return false;
+}
+
+bool Duna::mudaProdOuro(int turno, int ano)
+{
+	return false;
+}

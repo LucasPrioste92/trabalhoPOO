@@ -22,3 +22,8 @@ bool Pescaria::mudaProdOuro(int turno, int ano){
 	}
 	return false;
 }
+
+bool RefugioPiratas::mudaProdOuro(int turno, int ano)
+{
+	return false;
+}

@@ -14,6 +14,7 @@ class Mundo{
 	vector<Territorio*> territoriosDisponiveis;
 public:
 	Mundo(string n) : nome(n){}; //construtor, possibilidade de no futuro ter varios mundos
+	Mundo& operator=(const Mundo& m);
 	/* Getters and setters */
 	bool adicionaTerritorio(string nomeTerritorio, int n); //nome do territorio a adicionar e quantas vezes
 	const vector<Territorio*> &getTerritorios() const{ return territoriosDisponiveis; }
@@ -26,6 +27,7 @@ public:
 	bool verificaNomesTerritoriosCriados(const string nomeTerritorio) const; //verifica se o nome passado existe no vetor
 	string listaTerritorio(string nomeTerritorio) const; //obter informacoes sobre determinado territorio
 	void atualizarValores(int turno, int ano);
+	~Mundo() = default;
 };
 ostream& operator<<(ostream & os, const Mundo &m); //listar mundo com territorios
 #endif // !MUNDO_H 

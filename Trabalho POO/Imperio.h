@@ -29,7 +29,9 @@ class Imperio{
 	int resistenciaExtra;
 public:
 	Imperio(int forcMili,Mundo &m, Loja &l); //construtor
+	Imperio &operator=(const Imperio &i);
 	const vector<Territorio*>& getTerritoriosConquistados() const { return listaImperiosConquistados; }
+	const vector<Tecnologia*>& getTecnologiaComprada() const { return tecnologiaComprada; }
 	int getPontuacao() const {return pontosVitoria;}
 	bool atualizarPontos();
 	int pontuacaoFinal();
@@ -63,6 +65,7 @@ public:
 	string tomaAssalto(string arg2, int turno, int ano);
 	string tomaAssaltoTec(string arg2);
 	string getAsString() const;
+	~Imperio() = default;
 };
 ostream &operator<<(ostream &os, const Imperio &i); //listar imperio com territorios conquistados
 

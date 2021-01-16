@@ -24,11 +24,12 @@ class Construtor{
 	Imperio *imperio = nullptr;
 	Mundo *mundo = nullptr;
 	Loja *loja = nullptr;
-	Grava *grava = nullptr;
+	Grava* grava = nullptr;
 	vector <Eventos*> eventosPossiveis; 
 	vector <string> comandos = {"cria","carrega","conquista","passa","maisouro","maisprod","maismilitar","adquire","lista","avanca","grava","ativa","apaga","toma","modifica","fevento"};
 public:
-	Construtor(int t, int a,Loja &l, Mundo &m,Imperio &i,Grava &g);
+	Construtor(int t, int a,Loja &l, Mundo &m,Imperio &i, Grava& g);
+	Construtor& operator=(const Construtor &c);
 	/*Getters and setters*/
 	int getTurno() const {return turno;}
 	int setTurno(int t) {return turno = t;}
@@ -45,6 +46,7 @@ public:
 	string conquistaTerritorio(string nomeTerritorio);
 	string lista(string arg1);
 	int getRealUniform(int min, int max);
+	~Construtor() = default;
 };
 
 #endif
